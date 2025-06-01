@@ -1,0 +1,20 @@
+.container {
+	padding: 16px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.badge {
+	background-color: #4b5563; /* gray-700 */
+	color: white;
+	padding: 4px 12px;
+	border-radius: 9999px;
+	font-size: 14px;
+	text-decoration: none;
+	transition: background-color 0.2s ease-in-out;
+}
+
+.badge:hover {
+	background-color: #374151; /* gray-600 */
+}

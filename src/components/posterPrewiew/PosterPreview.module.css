@@ -1,0 +1,12 @@
+.container {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 2 / 3;
+	overflow: hidden;
+	border-radius: 0.375rem;
+}
+
+.image {
+	object-fit: cover;
+	object-position: top;
+}

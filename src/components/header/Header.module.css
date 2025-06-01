@@ -1,0 +1,39 @@
+.header {
+	background-color: #1f2937; /* gray-800 */
+	color: white;
+	padding: 16px;
+}
+
+.container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	max-width: 1120px; /* same as max-w-7xl */
+	margin: 0 auto;
+}
+
+.logo {
+	font-size: 24px;
+	font-weight: 600;
+	text-decoration: none;
+	color: white;
+	transition: color 0.2s ease-in-out;
+}
+
+.logo:hover {
+	color: #60a5fa; /* Example for 'text-primary' */
+}
+
+.profileButton {
+	background-color: #60a5fa; /* primary */
+	color: white;
+	padding: 8px 16px;
+	border-radius: 4px;
+	border: none;
+	cursor: pointer;
+	transition: background-color 0.2s ease-in-out;
+}
+
+.profileButton:hover {
+	background-color: #3b82f6; /* primary-dark */
+}

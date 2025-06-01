@@ -1,0 +1,20 @@
+.wrapper {
+	padding: 16px;
+}
+
+.title {
+	font-size: 20px;
+	font-weight: 600;
+	margin-bottom: 16px;
+}
+
+.highlight {
+	font-weight: bold;
+	color: #0070f3; /* або будь-який "primary" колір */
+}
+
+.notFound {
+	padding: 16px;
+	text-align: center;
+	color: #6b7280; /* сірий */
+}
