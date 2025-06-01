@@ -12,9 +12,11 @@ type Props = {
 export const MoviesListCard = ({ movie }: Props) => {
 	const { poster_path, title, vote_average, overview } = movie;
 
+
+
 	return (
 		<div className={styles.card}>
-			<Link href={`/movie/${movie.id}`}>
+			<Link href={`/movies/${movie.id}`}>
 				<PosterPreview posterPath={poster_path} title={title} />
 			</Link>
 			<div className={styles.content}>

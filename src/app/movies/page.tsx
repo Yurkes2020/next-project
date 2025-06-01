@@ -1,34 +1,38 @@
-'use client'
-
-import { useEffect } from "react";
-import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { useAppSelector } from "@/hooks/useAppSelector";
-import { moviesSliceActions } from "@/store/slices/moviesSlice";
 import { MoviesList } from "@/components/movieList/MoviesList";
 import { Pagination } from "@/components/pagination/Pagination";
 import styles from "./MoviesPage.module.css";
+import { moviesApi } from "@/api/moviesApi";
+import { Metadata } from "next";
+import {SearchParams} from "next/dist/server/request/search-params";
 
-export default function MoviesPage() {
-	const dispatch = useAppDispatch();
-	const { movies, currentPage, totalPages } = useAppSelector(state => state.moviesSlice);
+type MoviesPageProps ={
+	searchParams: Promise<SearchParams>;
+}
 
-	useEffect(() => {
-		dispatch(moviesSliceActions.getMovies(currentPage));
-	}, [dispatch, currentPage]);
+export const metadata: Metadata = {
+	title: "Movies",
+	description: "Browse latest movies",
+};
 
-	const handlePageChange = (page: number) => {
-		dispatch(moviesSliceActions.setPage(page));
-		window.scrollTo({ top: 0, behavior: 'smooth' });
-	};
+export default async function MoviesPage({ searchParams }: MoviesPageProps) {
+ const search = await searchParams;
+	const currentPage = Number(search?.page) || 1;
 
-	return (
-		<div className={styles.wrapper}>
-			<MoviesList movies={movies} />
-			<Pagination
-				currentPage={currentPage}
-				totalPages={totalPages}
-				onPageChange={handlePageChange}
-			/>
-		</div>
-	);
+	try {
+		const moviesData = await moviesApi.fetchMovies(currentPage);
+
+		if (!moviesData?.results?.length) {
+			return <div className={styles.wrapper}>No movies found.</div>;
+		}
+
+		return (
+			<div className={styles.wrapper}>
+				<MoviesList movies={moviesData.results} />
+				<Pagination currentPage={currentPage} totalPages={moviesData.total_pages} basePath="/movies" />
+			</div>
+		);
+	} catch (error) {
+		console.error('Error fetching genres:', error);
+		return <div className={styles.wrapper}>Error loading movies.</div>;
+	}
 }

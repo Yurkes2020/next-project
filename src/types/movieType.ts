@@ -15,4 +15,11 @@ export type MovieType = {
 	vote_count: number;
 }
 
+export type Response = {
+	page: number;
+	results: MovieType[];
+	total_pages: number;
+	total_results: number;
+}
+
 

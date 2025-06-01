@@ -1,4 +1,7 @@
 import axios from 'axios';
+import {Response} from "@/types/movieType";
+import {MovieByIdType} from "@/types/movieByIdType";
+import {Genre} from "@/types/genreType";
 
 const API_TOKEN = process.env.NEXT_PUBLIC_API_TOKEN;
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -8,13 +11,17 @@ const headers = {
 	Authorization: `Bearer ${API_TOKEN}`,
 };
 
+
+
 export const moviesApi = {
-	async fetchMovies(page = 1) {
+	async fetchMovies(page = 1): Promise<Response> {
 		try {
 			const response = await axios.get(
 				`${API_URL}/discover/movie?language=en-US&page=${page}&sort_by=popularity.desc`,
 				{ headers }
 			);
+
+
 			return response.data;
 		} catch (error) {
 			console.error('Error fetching movies:', error);
@@ -22,7 +29,7 @@ export const moviesApi = {
 		}
 	},
 
-	async fetchMovieById(id: number) {
+	async fetchMovieById(id: number) :Promise<MovieByIdType>{
 		try {
 			const response = await axios.get(`${API_URL}/movie/${id}`, { headers });
 			return response.data;
@@ -32,22 +39,27 @@ export const moviesApi = {
 		}
 	},
 
-	async fetchGenres() {
+	async fetchGenres(): Promise<Genre[]> {
 		try {
 			const response = await axios.get(`${API_URL}/genre/movie/list?language=en`, { headers });
+
 			return response.data.genres;
+
+
+
 		} catch (error) {
 			console.error('Error fetching genres:', error);
 			throw error;
 		}
 	},
 
-	async fetchMoviesByGenre(genreId: number, page = 1) {
+	async fetchMoviesByGenre(genreId: number, page = 1) : Promise<Response>{
 		try {
 			const response = await axios.get(
 				`${API_URL}/discover/movie?with_genres=${genreId}&language=en-US&page=${page}`,
 				{ headers }
 			);
+
 			return response.data;
 		} catch (error) {
 			console.error('Error fetching movies by genre:', error);
@@ -55,7 +67,7 @@ export const moviesApi = {
 		}
 	},
 
-	async searchMovies(query: string, page = 1) {
+	async searchMovies(query: string, page = 1): Promise<Response> {
 		try {
 			const response = await axios.get(
 				`${API_URL}/search/movie?query=${encodeURIComponent(query)}&language=en-US&page=${page}&include_adult=false`,

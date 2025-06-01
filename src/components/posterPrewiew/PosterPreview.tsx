@@ -6,7 +6,7 @@ type PosterPreviewProps = {
 	title: string;
 };
 
-export const PosterPreview = ({ posterPath, title }: PosterPreviewProps) => {
+export const PosterPreview = ({ posterPath, title}: PosterPreviewProps) => {
 	const posterUrl = posterPath
 		? `https://image.tmdb.org/t/p/w500${posterPath}`
 		: "/no-image.png";
@@ -19,6 +19,7 @@ export const PosterPreview = ({ posterPath, title }: PosterPreviewProps) => {
 				fill
 				sizes="(max-width: 768px) 100vw, 33vw"
 				className={styles.image}
+				priority
 			/>
 		</div>
 	);

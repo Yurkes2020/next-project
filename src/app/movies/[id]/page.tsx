@@ -1,29 +1,20 @@
-'use client';
 
-import { useEffect } from "react";
-import { useParams } from "next/navigation";
-import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { useAppSelector } from "@/hooks/useAppSelector";
 import Image from "next/image";
 import { StarsRating } from "@/components/starRating/StarsRating";
-import { moviesSliceActions } from "@/store/slices/moviesSlice";
 import styles from "./MovieByIdPage.module.css";
+import { moviesApi } from "@/api/moviesApi";
 
-const { getMovieById } = moviesSliceActions;
+interface MovieByIdPageProps {
+	params: Promise<{ id: string }> ;
+}
 
-export default function MovieByIdPage() {
-	const { id } = useParams();
-	const dispatch = useAppDispatch();
-	const { movie, isLoading } = useAppSelector((state) => state.moviesSlice);
+export default async function MovieByIdPage({ params }: MovieByIdPageProps) {
+	const {id} = await params;
+	const movie = await moviesApi.fetchMovieById(Number(id));
 
-	useEffect(() => {
-		if (id) {
-			dispatch(getMovieById(Number(id)));
-		}
-	}, [id, dispatch]);
-
-	if (isLoading) return <div className={`${styles.container} ${styles.centerText}`}>Loading...</div>;
-	if (!movie) return <div className={`${styles.container} ${styles.centerText}`}>No movie found.</div>;
+	if (!movie) {
+		return <div className={`${styles.container} ${styles.centerText}`}>No movie found.</div>;
+	}
 
 	return (
 		<div className={`${styles.container} ${styles.spaced}`}>
